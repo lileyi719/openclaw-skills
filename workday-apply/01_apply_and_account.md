@@ -5,7 +5,7 @@ Step 1: Locate and click the initial "Apply" button on the job description page.
 Step 2: Bypass the authentication wall (Create Account, Verify, Login) to reach the actual application form.
 
 ## 🛑 STRICT CREDENTIAL RULES
-- **EMAIL**: `lileyi719@gmail.com`
+- **EMAIL**: `yiqunxu35@gmail.com`
 - **PASSWORD**: `OpenClaw!2026!Leyi`
 - **NEVER** invent or guess credentials.
 

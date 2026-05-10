@@ -17,7 +17,7 @@ Workday uses complex React components. Standard `.fill()` or JS `evaluate` injec
    - **Type:** `browser.act: target="host", kind="type", selector="<dynamic_selector>", text="<value>", slowly=true`
 
 ## 🗂️ DATA EXTRACTION RULES
-Before filling the form, read the applicant's resume (e.g., from `~/Documents/resume.txt`).
+Before filling the form, read the applicant's resume from `./resume.txt`.
 - **Name**: Parse First Name and Last Name.
 - **Address**: Extract Address Line 1, City, State/Province, Postal/Zip Code, and Country.
 - **Phone**: Identify country code and core phone number.

@@ -1,7 +1,7 @@
 # SKILL: FILL WORK EXPERIENCE FROM RESUME
 
 ## 🎯 GOAL
-Dynamically extract employment history from the applicant's resume and fill out the "My Experience" / "Employment History" section. Handle repeating form blocks safely using dynamic locators.
+Dynamically extract employment history from the applicant's resume (`./resume.txt`) and fill out the "My Experience" / "Employment History" section. Handle repeating form blocks safely using dynamic locators.
 
 ## 🚨 CRITICAL: REACT-SAFE FIELD FILLING (MANDATORY)
 1. **CHAINED EXECUTION (NEW):** Do NOT stop to report progress for each job block. Fill ALL visible fields and multiple experience blocks in a single turn.

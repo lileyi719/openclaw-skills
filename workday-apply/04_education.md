@@ -1,7 +1,7 @@
 # SKILL: FILL EDUCATION FROM RESUME
 
 ## 🎯 GOAL
-Dynamically extract education history from the applicant's resume and fill out the "Education" section using React-safe physical interactions. Handle async comboboxes (searchable dropdowns) safely.
+Dynamically extract education history from the applicant's resume (`./resume.txt`) and fill out the "Education" section using React-safe physical interactions. Handle async comboboxes (searchable dropdowns) safely.
 
 ## 🚨 CRITICAL: REACT-SAFE FIELD FILLING (MANDATORY)
 1. **BAN JS INJECTIONS:** NEVER use `browser.evaluate` to set `.value`.
