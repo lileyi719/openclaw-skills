@@ -1,52 +1,26 @@
 # External Job Application Skill
 
 ## OBJECTIVE
-Apply to jobs on external platforms (Ashby, Greenhouse, Lever, Workday, company websites) using resume data from skills/job-applications/resume.txt.
+Apply to jobs on external platforms (Ashby, Greenhouse, Lever, Workday, company websites) using resume data from ~/Documents/resume.txt.
 
 ## RESUME DATA
-**File:** skills/job-applications/resume.txt (workspace-relative or absolute path: /Users/yiqunbot2/.openclaw/workspace/skills/job-applications/resume.txt)
+**File:** ~/Documents/resume.txt
 
 **Personal Information:**
-- First Name: Yiqun
-- Last Name: Xu
-- Full Name: Yiqun Xu
-- Email: yiqunxu35@gmail.com
-- Phone: +1(929)461-4214
-- Citizenship: US Citizen
-
-**Education:**
-- School: Lehigh University (Bethlehem, PA)
-- Degree: Bachelor of Science
-- Major: Computer Science and Engineering
-- Graduation: 05/2025
-- GPA: 3.64/4.0
+- First Name: Leyi
+- Last Name: Li
+- Full Name: Leyi Li
+- Email: lileyi719@gmail.com
+- Phone: (628) 306-6284
+- Address: 16 Turk Street, San Francisco, CA 94102
 
 **Work Experience:**
-1. Company: 7dollar.delivery
-   Title: Co-Founder / Software Developer
-   Location: San Francisco, CA (Remote)
-   Start Date: 12/2022
-   End Date: Present
-   Description: AI chatbot in React Native / Node.js, OpenClaw job automation tool, Auto-captain system for merchant relief pool
-
-2. Company: ComfyUI (Contract)
-   Title: Software Developer
-   Location: Remote
-   Start Date: 06/2025
-   End Date: 07/2025
-   Description: Agentic workflow system for image generation
-
-3. Company: Lehigh Social Media Lab
-   Title: Software Developer
-   Location: Bethlehem, PA
-   Start Date: 08/2022
-   End Date: 08/2023
-   Description: Web development and data analysis for social media research
-
-**Skills:**
-- Languages: Python, JavaScript/TypeScript, HTML/CSS, Java, SQL, C, C++, OCaml
-- Frameworks/Libraries: React, React Native, Node.js, Express, Spring Boot, PyTorch, Pandas, Hugging Face, Electron
-- Tools: Git, Docker, AWS, GCP, PostgreSQL, MongoDB, Redis, Nginx, Playwright, OpenClaw
+- Company: 7dollar.delivery
+- Title: Software Engineer Intern
+- Location: San Francisco, CA
+- Start Date: 02/2026
+- End Date: Present
+- Description: AI chatbot in React Native/Node.js, Openclaw job automation tool
 
 ## WORKFLOW
 
@@ -80,20 +54,20 @@ Apply to jobs on external platforms (Ashby, Greenhouse, Lever, Workday, company 
 
 ### STEP 2: FILL BASIC INFORMATION
 **All platforms require:**
-- Name: Yiqun Xu
-- Email: yiqunxu35@gmail.com
-- Phone: +1(929)461-4214
-- Resume: Upload from skills/job-applications/resume.txt
+- Name: Leyi Li
+- Email: lileyi719@gmail.com
+- Phone: (628) 306-6284
+- Resume: Upload from ~/Documents/resume.txt or use resume file path
 
 **Platform-specific fields:**
 
 #### ASHBY (Simple Form)
 ```
 Typical fields:
-- Name* → Yiqun Xu
-- Email* → yiqunxu35@gmail.com
+- Name* → Leyi Li
+- Email* → lileyi719@gmail.com
 - Resume* → Upload file
-- Phone → +1(929)461-4214
+- Phone → (628) 306-6284
 
 Steps:
 1. Fill Name textbox
@@ -106,10 +80,10 @@ Steps:
 #### GREENHOUSE (Moderate Complexity)
 ```
 Typical fields:
-- First Name → Yiqun
-- Last Name → Xu
-- Email → yiqunxu35@gmail.com
-- Phone → +1(929)461-4214
+- First Name → Leyi
+- Last Name → Li
+- Email → lileyi719@gmail.com
+- Phone → (628) 306-6284
 - Resume → Upload
 - Cover Letter → Optional (skip if not required)
 - Additional questions → Answer based on context
@@ -126,9 +100,9 @@ Steps:
 #### LEVER (Simple-Moderate)
 ```
 Typical fields:
-- Name → Yiqun Xu
-- Email → yiqunxu35@gmail.com
-- Phone → +1(929)461-4214
+- Name → Leyi Li
+- Email → lileyi719@gmail.com
+- Phone → (628) 306-6284
 - Resume → Upload
 - Current company → 7dollar.delivery
 - Links (LinkedIn, GitHub, Portfolio) → Optional
@@ -143,9 +117,9 @@ Steps:
 #### JAZZHR (Simple Form)
 ```
 Typical fields:
-- Name → Yiqun Xu
-- Email → yiqunxu35@gmail.com
-- Phone → +1(929)461-4214
+- Name → Leyi Li
+- Email → lileyi719@gmail.com
+- Phone → (628) 306-6284
 - Resume → Upload file
 
 Steps:
@@ -160,10 +134,10 @@ Steps:
 #### BAMBOOHR (Simple Form)
 ```
 Typical fields:
-- First Name → Yiqun
-- Last Name → Xu
-- Email → yiqunxu35@gmail.com
-- Phone → +1(929)461-4214
+- First Name → Leyi
+- Last Name → Li
+- Email → lileyi719@gmail.com
+- Phone → (628) 306-6284
 - Resume → Upload file
 
 Steps:
@@ -176,9 +150,9 @@ Steps:
 #### COMEET (Simple Form)
 ```
 Typical fields:
-- Full Name → Yiqun Xu
-- Email → yiqunxu35@gmail.com
-- Phone → +1(929)461-4214
+- Full Name → Leyi Li
+- Email → lileyi719@gmail.com
+- Phone → (628) 306-6284
 - Resume → Upload file
 
 Steps:
@@ -191,7 +165,7 @@ Steps:
 #### WORKDAY (Complex - Use MASTER_apply.md)
 ```
 DO NOT use this skill for Workday.
-Route to: skills/job-applications/workday-apply/MASTER_apply.md (or fully: /Users/yiqunbot2/.openclaw/workspace/skills/job-applications/workday-apply/MASTER_apply.md)
+Route to: ~/.openclaw/skills/workday-apply/MASTER_apply.md
 ```
 
 #### GREENHOUSE (Skip - 0% Success Rate)
@@ -213,7 +187,7 @@ Mark as "skipped_icims" and move to next job.
 - "Why do you want to work here?" → Skip (not required*)
 - "What's your expected salary?" → Skip or use range from resume
 - "Are you authorized to work in the US?" → Yes
-- "Do you require visa sponsorship?" → No (US Citizen)
+- "Do you require visa sponsorship?" → Answer truthfully
 - LinkedIn profile → Optional (skip unless required*)
 - GitHub/Portfolio → Optional (skip unless required*)
 
@@ -223,8 +197,8 @@ Mark as "skipped_icims" and move to next job.
 ```
 1. Click "Upload" or "Choose File" button
 2. If file dialog appears:
-   - Use skills/job-applications/resume.txt as text resume
-   - OR use skills/job-applications/resume.pdf if exists (preferred for uploads)
+   - Use ~/Documents/resume.txt as text resume
+   - OR use ~/Documents/resume.pdf if exists (preferred for uploads)
 3. Wait for upload confirmation
 4. Verify resume is attached
 ```
@@ -242,7 +216,7 @@ Mark as "skipped_icims" and move to next job.
 
 ### STEP 6: RECORD RESULTS
 ```
-Update skills/job-applications/batch_progress.json:
+Update ~/Documents/batch_progress.json:
 {
   "job_url": "...",
   "platform": "ashby|greenhouse|lever|other",
@@ -250,7 +224,7 @@ Update skills/job-applications/batch_progress.json:
   "submitted_at": "ISO timestamp"
 }
 
-Append to skills/job-applications/applied_jobs.json:
+Append to ~/Documents/applied_jobs.json:
 {
   "title": "...",
   "company": "...",
@@ -282,8 +256,8 @@ Append to skills/job-applications/applied_jobs.json:
 ### Rule 4: USE RESUME DATA ONLY
 - Never invent information
 - If field not in resume → Skip or use placeholder
-- Phone format: +1(929)461-4214
-- Email: yiqunxu35@gmail.com (always)
+- Phone format: (628) 306-6284
+- Email: lileyi719@gmail.com (always)
 
 ### Rule 5: BROWSER TARGET
 - Always use `target="host"`
@@ -326,7 +300,7 @@ Append to skills/job-applications/applied_jobs.json:
 
 ## INTEGRATION WITH CLASSIFIER
 
-**Input:** skills/job-applications/external_apply_jobs.json from linkedin-job-classifier
+**Input:** ~/Documents/external_apply_jobs.json from linkedin-job-classifier
 
 **Process:**
 ```
@@ -346,10 +320,10 @@ Append to skills/job-applications/applied_jobs.json:
 [APPLY] 2 jobs to process
 
 [APPLY] Job 1: Everis - Ashby platform
-[APPLY] Filling Name: Yiqun Xu
-[APPLY] Filling Email: yiqunxu35@gmail.com
+[APPLY] Filling Name: Leyi Li
+[APPLY] Filling Email: lileyi719@gmail.com
 [APPLY] Uploading resume...
-[APPLY] Filling Phone: +1(929)461-4214
+[APPLY] Filling Phone: (628) 306-6284
 [APPLY] Submitting...
 [APPLY] ✅ Application submitted
 
@@ -367,8 +341,8 @@ Append to skills/job-applications/applied_jobs.json:
 
 ## FILES
 
-- **Skill:** skills/job-applications/external-apply/SKILL.md (or fully: /Users/yiqunbot2/.openclaw/workspace/skills/job-applications/external-apply/SKILL.md)
-- **Resume:** skills/job-applications/resume.txt
-- **Input:** skills/job-applications/external_apply_jobs.json
-- **Progress:** skills/job-applications/batch_progress.json
-- **Applied History:** skills/job-applications/applied_jobs.json
+- **Skill:** ~/.openclaw/skills/external-apply/SKILL.md
+- **Resume:** ~/Documents/resume.txt
+- **Input:** ~/Documents/external_apply_jobs.json
+- **Progress:** ~/Documents/batch_progress.json
+- **Applied History:** ~/Documents/applied_jobs.json

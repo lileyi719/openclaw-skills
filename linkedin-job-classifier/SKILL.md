@@ -6,9 +6,9 @@ Classify LinkedIn jobs into two categories:
 - **External Apply**: Jobs that redirect to external application sites (Workday, Greenhouse, Lever, Ashby, etc.)
 
 ## OUTPUT
-Two files in the workspace data directory:
-- `skills/job-applications/easy_apply_jobs.json` - Jobs for EasyApplyBot
-- `skills/job-applications/external_apply_jobs.json` - Jobs for workday-apply/BATCH_apply.md or external-apply/SKILL.md
+Two files in ~/Documents/:
+- `easy_apply_jobs.json` - Jobs for EasyApplyBot
+- `external_apply_jobs.json` - Jobs for BATCH_apply skill
 
 ## WORKFLOW
 
@@ -106,8 +106,8 @@ EXTERNAL_APPLY jobs:
 
 ### STEP 7: SAVE RESULTS
 ```
-1. Write easy_apply_jobs.json to `skills/job-applications/easy_apply_jobs.json`
-2. Write external_apply_jobs.json to `skills/job-applications/external_apply_jobs.json`
+1. Write easy_apply_jobs.json to ~/Documents/
+2. Write external_apply_jobs.json to ~/Documents/
 3. Report summary:
    - Total scanned: X
    - Easy Apply: Y
@@ -176,7 +176,7 @@ Agent response:
 ...
 [CLASSIFIER] Summary: 25 jobs scanned, 10 Easy Apply, 15 External Apply
 [CLASSIFIER] Platforms: 5 Ashby, 4 Workday, 3 Greenhouse, 3 other
-[CLASSIFIER] Files saved to skills/job-applications/
+[CLASSIFIER] Files saved to ~/Documents/
 ```
 
 ## IMPLEMENTATION NOTES

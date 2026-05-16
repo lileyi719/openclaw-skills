@@ -12,7 +12,7 @@ Job URLs to apply (passed by user or read from file):
 - URL 5: https://workday.wd5.myworkdayjobs.com/en-US/Workday/job/Sr-Product-Advisor---Learning_JR-0105558-1?source=Careers_Website
 
 ## 3. PROGRESS TRACKING
-**File:** `skills/job-applications/batch_progress.json` (absolute: `/Users/yiqunbot2/.openclaw/workspace/skills/job-applications/batch_progress.json`)
+**File:** `~/Documents/batch_progress.json`
 
 **Structure:**
 ```json
@@ -141,7 +141,7 @@ Completed Jobs:
 Failed Jobs:
 - [Job Title] (URL) - Error: [reason]
 
-Progress file: skills/job-applications/batch_progress.json
+Progress file: ~/Documents/batch_progress.json
 ```
 
 ## 5. USER COMMANDS (USER CAN SEND ANYTIME)
@@ -258,5 +258,5 @@ If batch is interrupted (crash, user stop):
 
 - **Orchestrator:** `BATCH_apply.md` (this file)
 - **Worker:** `MASTER_apply.md` (single job logic)
-- **Progress:** `skills/job-applications/batch_progress.json`
-- **Applied Jobs History:** `skills/job-applications/applied_jobs.json` (append-only log)
+- **Progress:** `~/Documents/batch_progress.json`
+- **Applied Jobs History:** `~/Documents/applied_jobs.json` (append-only log of all successfully applied jobs)

@@ -36,7 +36,7 @@ Similar to Experience, clicking "Add Education" generates new random IDs.
 - ✅ **ALWAYS** use Playwright `.nth()` or `.last()` locators to target the newest block, OR take a quick snapshot AFTER clicking "Add" to discover the new dynamic labels.
 
 ## 🗂️ DATA EXTRACTION RULES
-Read the applicant's resume (`skills/job-applications/resume.txt`). Extract for each degree:
+Read the applicant's resume (`~/Documents/resume.txt`). Extract for each degree:
 - School / University Name
 - Degree Type (e.g., Bachelor's, Master's)
 - Field of Study / Major

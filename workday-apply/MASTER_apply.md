@@ -11,7 +11,7 @@ You have access to the following local files. Do NOT guess their contents; you M
 - `./extractor.js` — ⚠️ This script runs inside a browser context via `browser.evaluate`.
 
 **Data Source:**
-- `./resume.txt` (or absolute: `/Users/yiqunbot2/.openclaw/workspace/skills/job-applications/resume.txt`) - Contains the applicant's raw resume data.
+- `./resume.txt` - Contains the applicant's raw resume data.
 
 **🔄 RULE: SMART ACCOUNT HANDLING (CREATE OR REUSE)**
 For EVERY new job link, ALWAYS attempt "Create Account" first. **HOWEVER**, if the email (`yiqunxu35@gmail.com`) already exists, or you are redirected to a Sign In page, you are **FULLY AUTHORIZED** to pivot to "Sign In". **DO NOT PAUSE** to ask for permission.
@@ -32,7 +32,7 @@ Step 2: Bypass the authentication wall (Create Account, Verify, Login) to reach 
 
 ## 🛑 STRICT CREDENTIAL RULES
 - **EMAIL**: `yiqunxu35@gmail.com`
-- **PASSWORD**: `OpenClaw!2026!Yiqun`
+- **PASSWORD**: `OpenClaw!2026!Leyi`
 - **NEVER** invent or guess credentials.
 
 ## 🧠 EXECUTION STRATEGY: DYNAMIC SEMANTIC LOCATORS
@@ -69,13 +69,13 @@ For EACH field, execute this strict 3-step sequence:
 ## 🛠️ PHASE 3: POST-REGISTRATION LOGIN (CRITICAL EXPECTED REDIRECT)
 Workday **always** redirects to the Sign In page after clicking Create Account. This is NORMAL and NOT a failure.
 1. Immediately locate the Email and Password fields on the Sign In page.
-2. **Use the exact same 3-step physical fill method (Click -> Clear -> Type Slowly)** from Phase 2 to enter `yiqunxu35@gmail.com` and `OpenClaw!2026!Yiqun`.
+2. **Use the exact same 3-step physical fill method (Click -> Clear -> Type Slowly)** from Phase 2 to enter `lileyi719@gmail.com` and `OpenClaw!2026!Leyi`.
 3. Click "Sign In" / "Submit".
 4. Wait 3 seconds and check the heading (`h2` or `h3`).
 
 ## 🚪 ROUTING (AFTER LOGIN)
 - If heading says "My Information" → **SUCCESS, load `02_basic_info.md`**
-- If heading says "Verify" or "Check email" → **STOP: `VERIFICATION_REQUIRED: Please check yiqunxu35@gmail.com`**
+- If heading says "Verify" or "Check email" → **STOP: `VERIFICATION_REQUIRED: Please check lileyi719@gmail.com`**
 - If heading still shows "Sign In" with an error → credentials may be wrong or account not yet propagated; retry once using the strict physical fill method.
 
 - **STEP 2**:
@@ -210,7 +210,7 @@ Some Workday instances use an autocomplete dropdown for "Company". Using `slowly
 4. ✅ **PHYSICAL CLICK:** Click the specific text match: `browser.act: target="host", kind="click", element="text=<Exact_Company_Name>"`
 
 ## 🗂️ DATA EXTRACTION RULES
-Read the applicant's resume (`skills/job-applications/resume.txt`). Extract:
+Read the applicant's resume (`~/Documents/resume.txt`). Extract:
 - Job Title
 - Company Name
 - Location (City/State)
@@ -279,7 +279,7 @@ Similar to Experience, clicking "Add Education" generates new random IDs.
 - ✅ **ALWAYS** use Playwright `.nth()` or `.last()` locators to target the newest block, OR take a quick snapshot AFTER clicking "Add" to discover the new dynamic labels.
 
 ## 🗂️ DATA EXTRACTION RULES
-Read the applicant's resume (`skills/job-applications/resume.txt`). Extract for each degree:
+Read the applicant's resume (`~/Documents/resume.txt`). Extract for each degree:
 - School / University Name
 - Degree Type (e.g., Bachelor's, Master's)
 - Field of Study / Major

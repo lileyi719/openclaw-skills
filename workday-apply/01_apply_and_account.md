@@ -6,7 +6,7 @@ Step 2: Bypass the authentication wall (Create Account, Verify, Login) to reach 
 
 ## 🛑 STRICT CREDENTIAL RULES
 - **EMAIL**: `yiqunxu35@gmail.com`
-- **PASSWORD**: `OpenClaw!2026!Yiqun`
+- **PASSWORD**: `OpenClaw!2026!Leyi`
 - **NEVER** invent or guess credentials.
 
 ## 🧠 EXECUTION STRATEGY: DYNAMIC SEMANTIC LOCATORS
@@ -43,11 +43,11 @@ For EACH field, execute this strict 3-step sequence:
 ## 🛠️ PHASE 3: POST-REGISTRATION LOGIN (CRITICAL EXPECTED REDIRECT)
 Workday **always** redirects to the Sign In page after clicking Create Account. This is NORMAL and NOT a failure.
 1. Immediately locate the Email and Password fields on the Sign In page.
-2. **Use the exact same 3-step physical fill method (Click -> Clear -> Type Slowly)** from Phase 2 to enter `yiqunxu35@gmail.com` and `OpenClaw!2026!Yiqun`.
+2. **Use the exact same 3-step physical fill method (Click -> Clear -> Type Slowly)** from Phase 2 to enter `lileyi719@gmail.com` and `OpenClaw!2026!Leyi`.
 3. Click "Sign In" / "Submit".
 4. Wait 3 seconds and check the heading (`h2` or `h3`).
 
 ## 🚪 ROUTING (AFTER LOGIN)
 - If heading says "My Information" → **SUCCESS, load `02_basic_info.md`**
-- If heading says "Verify" or "Check email" → **STOP: `VERIFICATION_REQUIRED: Please check yiqunxu35@gmail.com`**
+- If heading says "Verify" or "Check email" → **STOP: `VERIFICATION_REQUIRED: Please check lileyi719@gmail.com`**
 - If heading still shows "Sign In" with an error → credentials may be wrong or account not yet propagated; retry once using the strict physical fill method.
