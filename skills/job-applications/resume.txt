@@ -1,0 +1,55 @@
+**CONTACT INFORMATION**
+**Name:** Yiqun (Brian) Xu
+**Citizenship:** US Citizen
+**Phone:** +1(929)461-4214
+**Email:** yiqunxu35@gmail.com
+**LinkedIn:** LinkedIn Profile (provided in document)
+
+**INTRODUCTION**
+Product-oriented full-stack engineer experienced in delivering pixel-perfect user interfaces from Figma prototypes across web and mobile apps, while building scalable, reliable backend systems. Focused on reducing user friction through thoughtful UX, clean UI implementation, and end-to-end ownership.
+
+**EXPERIENCE**
+
+**Co-Founder & Engineer | 7dollar.delivery**
+San Francisco, CA | December 2022 – Present
+*   Led the creation of an innovative food delivery platform with a $7 flat-rate delivery model.
+*   Engineered technology solutions including mobile applications, QR and NFC-based ordering, POS integrations, and remote revenue tracking.
+*   Enhanced Menu Management via LLM Integration: Built mobile-friendly interfaces using LLMs, Google OCR, and ChatGPT API to streamline 150+ menu item uploads, boosting efficiency by 12,000% with AI-curated images and translations.
+*   Mobile App Development: Built cross-platform merchant-side mobile applications for iOS and Android using React Native and Expo; implemented push notifications via Firebase Cloud Messaging.
+*   Priority Queue System: Developed a command queue system to manage thermal receipt and label printers across multiple devices.
+*   Delivery API Integration: Partnered with DoorDash to build a custom delivery API for seamless logistics integration.
+*   Rapid SMS Deployment: Developed an SMS sender API through Android and AWS LightSail to expedite deployment processes.
+*   Stripe Payment System Optimization: Implemented customized Stripe APIs, enhancing chargeback resolution rates by 30%.
+*   Offline-Enabled Frontend: Introduced offline functionality using IndexedDB to ensure uninterrupted operations and payment processing in unstable networks.
+*   Accelerator Success & Funding: Secured a $50,000 funding award through a San Francisco government accelerator program.
+*   Full Product Lifecycle Development: Managed end-to-end development using Node.js, React.js, Firebase, IndexedDB, and Google Cloud Platform (GCP).
+
+**Full Stack Engineer (Contract) | ComfyUI**
+San Francisco, CA (Hybrid) | June 2025 – July 2025
+*   Worked on a cross-platform Electron application, translating Figma prototypes into production-ready user interfaces using React and TypeScript.
+*   UI Architecture & Implementation: Built reusable, maintainable React and TypeScript components for complex workflows.
+*   Frontend & API Integration: Integrated components with internal Python-based APIs, optimizing rendering performance and state updates.
+*   UI Quality & Testing: Improved user experience through systematic debugging and implemented Playwright-based end-to-end tests to prevent regressions.
+
+**Application Programmer | Social Media Lab, Lehigh University**
+Remote | August 2022 – August 2023
+*   Developed digital tools for older adults to combat online scams, focusing on usability and accessibility.
+*   DART Learning Module: Designed an interactive module incorporating multi-role authentication, rewards, and tracking.
+*   Simulation Tools for Scam Awareness: Developed phishing mail simulations and misinformation detection tools for hands-on training.
+*   Cross-functional Collaboration: Collaborated with stakeholders and UX designers to align features with educational goals.
+
+**OPEN SOURCE PROJECT**
+**Node.js Library for Brother Label Printers**
+Built an NPM library to print large PNG images on Brother Label Printers using algorithms for image conversion, rotation, data compression, and hexadecimal formatting to prevent crashes and streamline processing.
+
+**KEY SKILLS**
+
+**Software Development:**
+Full Stack Development, Mobile and Web Applications, Object-Oriented Programming, Agile Development & Best Practices, API Integration & Compliance, Secure Payment Processing, Authentication & Data Privacy, Business Development & Partnerships.
+
+**Software & Cloud Computing Technologies:**
+React.js, TypeScript, Node.js, PHP, Java, Kotlin, C#, Go, .NET, Python, AWS, GCP, Azure, Firebase, Expo, React Native, MongoDB, Oracle SQL, MySQL, Responsive Design, User-Centered Design, UI/UX Design (Figma), Git, IndexedDB.
+
+**EDUCATION**
+**Bachelor of Science in Computer Science and Engineering**
+Lehigh University, Bethlehem, PA
