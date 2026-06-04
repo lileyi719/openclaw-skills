@@ -1,291 +1,446 @@
+/**
+ * Phase 1 job SEARCH (script). Apply/submit resume must use OpenClaw browser — see easy-apply / external-apply skills.
+ */
 import { chromium } from 'playwright';
-import { writeFileSync, mkdirSync } from 'fs';
+import { writeFileSync, mkdirSync, existsSync, copyFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { createPipelineLogger, isNonInteractive, JOB_APPS_DIR } from './lib/pipeline-log.mjs';
+import { shouldSkipJob } from './lib/pipeline-queue.mjs';
+import {
+  loadScanConfig,
+  outputFilesForTarget,
+  shouldCollectEasyApply,
+  shouldCollectExternal,
+} from './lib/linkedin-search.mjs';
+import { buildPipelineReport, emitFinalReport } from './lib/pipeline-report.mjs';
+import {
+  classifyExternalUrl,
+  detectPlatformFromUrl,
+  isAllowedAtsUrl,
+} from './lib/ats-url-filter.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const OUT_DIR = resolve(__dirname, '..', 'skills', 'job-applications');
-mkdirSync(OUT_DIR, { recursive: true });
+const OUT_DIR = JOB_APPS_DIR;
+const PROFILE_DIR = resolve(OUT_DIR, '.browser-profile', 'linkedin');
+const ROOT = resolve(__dirname, '..');
+const RESUME_SRC = resolve(ROOT, 'resume.txt');
+const RESUME_DST = resolve(OUT_DIR, 'resume.txt');
 
-const SEARCH_URL = 'https://www.linkedin.com/jobs/search/?keywords=Software%20Engineer&location=United%20States';
-const LIMIT = 5;
+mkdirSync(OUT_DIR, { recursive: true });
+mkdirSync(PROFILE_DIR, { recursive: true });
+
+if (existsSync(RESUME_SRC) && !existsSync(RESUME_DST)) {
+  copyFileSync(RESUME_SRC, RESUME_DST);
+}
+
+const scanConfig = loadScanConfig();
+const SEARCH_URL = scanConfig.search_url;
+const LIMIT = scanConfig.limit;
+const MAX_PAGES = scanConfig.max_pages;
+const SCAN_TARGET = scanConfig.scan_target;
+const ATS_ALLOWLIST_ONLY = scanConfig.ats_allowlist_only !== false;
+const STAGE = process.env.PIPELINE_STAGE || 'scan';
+
+async function captureExternalApplyUrl(context, page, btn) {
+  let href = (await btn.getAttribute('href')) || '';
+  if (href.startsWith('http') && !href.includes('linkedin.com')) {
+    return href;
+  }
+
+  const popupPromise = context.waitForEvent('page', { timeout: 12000 }).catch(() => null);
+  await btn.click();
+  await sleep(2000);
+  const popup = await popupPromise;
+  if (popup) {
+    try {
+      await popup.waitForLoadState('domcontentloaded', { timeout: 20000 });
+    } catch {
+      /* partial load ok */
+    }
+    const url = popup.url();
+    await popup.close().catch(() => {});
+    if (url && !url.includes('linkedin.com')) return url;
+  }
+
+  const current = page.url();
+  if (current && !current.includes('linkedin.com/jobs')) {
+    await page.goBack({ waitUntil: 'domcontentloaded', timeout: 15000 }).catch(() => {});
+    return current;
+  }
+  return '';
+}
 
 async function sleep(ms) {
-  return new Promise(r => setTimeout(r, ms));
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+async function isLoggedIn(page) {
+  const profileIcon = await page.$(
+    '.global-nav__me-photo, .profile-icon, img[alt*="photo"], .nav-item__profile-member-photo',
+  );
+  if (profileIcon) return true;
+  const signInBtn = await page.$(
+    'a[href*="login"], a.nav__button-tertiary, a[data-tracking-control="guest-home-nav"]',
+  );
+  return !signInBtn;
+}
+
+async function tryAutoLogin(page, log) {
+  const email = process.env.LINKEDIN_EMAIL;
+  const password = process.env.LINKEDIN_PASSWORD;
+  if (!email || !password) {
+    log.warn('login', 'LINKEDIN_EMAIL / LINKEDIN_PASSWORD not set — cannot auto-login');
+    return false;
+  }
+
+  log.info('login', 'Attempting LinkedIn auto-login');
+  await page.goto('https://www.linkedin.com/login', { waitUntil: 'domcontentloaded', timeout: 60000 });
+  await sleep(2000);
+
+  const userField = await page.$('#username, input[name="session_key"]');
+  const passField = await page.$('#password, input[name="session_password"]');
+  if (!userField || !passField) {
+    log.warn('login', 'Login form fields not found');
+    return false;
+  }
+
+  await userField.fill(email);
+  await passField.fill(password);
+  const submit = await page.$('button[type="submit"], button[data-litms-control-urn="login-submit"]');
+  if (submit) await submit.click();
+  else await page.keyboard.press('Enter');
+
+  await sleep(5000);
+  const ok = await isLoggedIn(page);
+  if (ok) log.info('login', 'LinkedIn login succeeded');
+  else log.error('login', 'LinkedIn login failed — check credentials or CAPTCHA');
+  return ok;
+}
+
+function normalizeJob(record) {
+  const url = record.url || record.linkedin_url || record.linkedin_link || '';
+  const jobId =
+    record.linkedin_job_id ||
+    (url.match(/\/jobs\/view\/(\d+)/)?.[1] ?? '');
+  return {
+    ...record,
+    title: record.title || 'Unknown Title',
+    company: record.company || 'Unknown Company',
+    location: record.location || 'Unknown Location',
+    linkedin_job_id: jobId,
+    url,
+    linkedin_link: url,
+    linkedin_url: url,
+  };
 }
 
 async function main() {
-  console.log('[CLASSIFIER] Launching browser...');
-  const browser = await chromium.launch({ headless: false }); // visible for login
-  const context = await browser.newContext({
+  const log = createPipelineLogger({ stage: STAGE });
+  let scanOutcome = 'success';
+  let scanError = null;
+  const nonInteractive = isNonInteractive();
+  const headless = process.env.HEADLESS === '1';
+  const scanStarted = Date.now();
+  const heartbeatSec = Number(process.env.PIPELINE_HEARTBEAT_SEC || '15', 10);
+  let heartbeatTimer = null;
+
+  log.info('browser', `Launching browser (headless=${headless}, scan_target=${SCAN_TARGET})`);
+  log.info('config', `limit=${LIMIT} pages=${MAX_PAGES} url=${SEARCH_URL} ats_allowlist_only=${ATS_ALLOWLIST_ONLY}`);
+
+  const context = await chromium.launchPersistentContext(PROFILE_DIR, {
+    headless,
     viewport: { width: 1280, height: 900 },
     locale: 'en-US',
   });
-  const page = await context.newPage();
+  const page = context.pages()[0] || (await context.newPage());
 
-  console.log(`[CLASSIFIER] Navigating to LinkedIn Jobs search...`);
-  await page.goto(SEARCH_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
-  await sleep(3000);
-
-  // Check if logged in by looking for profile icon
-  const profileIcon = await page.$('.global-nav__me-photo, .profile-icon, img[alt*="photo"], .nav-item__profile-member-photo');
-  if (!profileIcon) {
-    // Check for sign-in link
-    const signInBtn = await page.$('a[href*="login"], a.nav__button-tertiary, a[data-tracking-control="guest-home-nav"]');
-    if (signInBtn) {
-      console.log('[CLASSIFIER] ❌ Not logged into LinkedIn. Please log in manually.');
-      console.log('[CLASSIFIER] The browser is open. Log in, then press Enter here.');
-      await new Promise(r => {
-        process.stdin.once('data', r);
-        console.log('[CLASSIFIER] Waiting for you to log in and press Enter...');
-      });
-    } else {
-      // Might already be logged in but we can't tell visually - check page content
-      console.log('[CLASSIFIER] Checking profile indicator...');
-      // Try to wait a bit more
-      await sleep(2000);
-    }
-  }
-
-  // Wait for job listings to load
   try {
-    await page.waitForSelector('.job-card-container, .jobs-search-results__list, .scaffold-layout__list-container', { timeout: 10000 });
-  } catch {
-    console.log('[CLASSIFIER] Waiting additional time for listings...');
-    await sleep(5000);
-  }
+    heartbeatTimer = setInterval(() => {
+      const elapsedSec = Math.floor((Date.now() - scanStarted) / 1000);
+      log.heartbeat('scan', `Playwright 扫描进行中（${elapsedSec}s）`, { elapsedSec });
+    }, heartbeatSec * 1000);
 
-  // Wait for page to settle
-  await sleep(3000);
+    log.info('navigate', `Opening jobs search: ${SEARCH_URL}`);
+    await page.goto(SEARCH_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    await sleep(3000);
 
-  // Take a screenshot for debugging
-  await page.screenshot({ path: resolve(OUT_DIR, 'linkedin_debug.png') });
-  console.log('[CLASSIFIER] 📸 Debug screenshot saved.');
-
-  // Get job cards
-  const jobCards = await page.$$('.job-card-container, .jobs-search-results__list-item');
-  console.log(`[CLASSIFIER] Found ${jobCards.length} job cards on page.`);
-
-  const easyApplyJobs = [];
-  const externalApplyJobs = [];
-
-  // Process each job card (up to LIMIT)
-  const toProcess = jobCards.slice(0, LIMIT);
-  for (let i = 0; i < toProcess.length; i++) {
-    const card = toProcess[i];
-    console.log(`\n[CLASSIFIER] --- Processing job ${i + 1}/${toProcess.length} ---`);
+    if (!(await isLoggedIn(page))) {
+      const loggedIn = await tryAutoLogin(page, log);
+      if (!loggedIn) {
+        if (nonInteractive) {
+          throw new Error(
+            'Not logged into LinkedIn. Set LINKEDIN_EMAIL and LINKEDIN_PASSWORD, or run once interactively to seed .browser-profile/linkedin',
+          );
+        }
+        log.warn('login', 'Not logged in — open browser window and log in manually');
+        await new Promise((r) => process.stdin.once('data', r));
+        await page.goto(SEARCH_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
+        await sleep(3000);
+      } else {
+        await page.goto(SEARCH_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
+        await sleep(3000);
+      }
+    } else {
+      log.info('login', 'Using existing LinkedIn session from browser profile');
+    }
 
     try {
-      // Scroll card into view
-      await card.scrollIntoViewIfNeeded();
-      await sleep(500);
+      await page.waitForSelector(
+        '.job-card-container, .jobs-search-results__list, .scaffold-layout__list-container',
+        { timeout: 15000 },
+      );
+    } catch {
+      log.warn('dom', 'Job list selector timeout — continuing after extra wait');
+      await sleep(5000);
+    }
 
-      // Get title, company, location
-      const titleEl = await card.$('.job-card-list__title, .jobs-search-results__list-item a, .job-card-container__link, a[data-tracking-control="job-card"]');
-      const title = titleEl ? (await titleEl.textContent()).trim() : 'Unknown Title';
-      
-      const companyEl = await card.$('.job-card-container__company-name, .artdeco-entity-lockup__subtitle, .job-card-container__primary-description');
-      const company = companyEl ? (await companyEl.textContent()).trim() : 'Unknown Company';
-      
-      const locationEl = await card.$('.job-card-container__metadata-item, .artdeco-entity-lockup__caption, .job-card-container__secondary-description');
-      const location = locationEl ? (await locationEl.textContent()).trim() : 'Unknown Location';
+    await sleep(2000);
+    const debugShot = resolve(OUT_DIR, 'linkedin_debug.png');
+    await page.screenshot({ path: debugShot });
+    log.info('screenshot', `Saved ${debugShot}`);
 
-      // Get job URL from the card
-      let jobUrl = '';
-      const linkEl = await card.$('a');
-      if (linkEl) {
-        jobUrl = await linkEl.getAttribute('href');
-        if (jobUrl && !jobUrl.startsWith('http')) {
-          jobUrl = 'https://www.linkedin.com' + jobUrl;
-        }
-      }
+    const easyApplyJobs = [];
+    const externalApplyJobs = [];
+    let skippedExternal = 0;
+    const collectEasy = shouldCollectEasyApply(SCAN_TARGET);
+    const collectExternal = shouldCollectExternal(SCAN_TARGET);
+    let collected = 0;
+    let pageNum = 0;
+    const seenIds = new Set();
 
-      console.log(`[CLASSIFIER] Job: "${title}" at ${company} (${location})`);
+    while (collected < LIMIT && pageNum < MAX_PAGES) {
+      pageNum++;
+      log.info('page', `Scanning page ${pageNum}/${MAX_PAGES}`, {
+        progress: { current: collected, total: LIMIT },
+      });
 
-      // Check for Easy Apply text in the card
-      const cardText = await card.textContent();
-      const easyApplyLabel = await card.$('text="Easy Apply", span:text("Easy Apply"), [class*="easy-apply"], span:has-text("Easy Apply")');
+      const jobCards = await page.$$('.job-card-container, .jobs-search-results__list-item');
+      log.info('list', `Page ${pageNum}: ${jobCards.length} cards visible`);
 
-      // Check text content for Easy Apply
-      const hasEasyApply = cardText.includes('Easy Apply');
-      const hasExternalApply = cardText.includes('External Apply');
+      for (let i = 0; i < jobCards.length && collected < LIMIT; i++) {
+        const card = jobCards[i];
+      log.info('job', `Processing ${collected + 1}/${LIMIT} (card ${i + 1})`, {
+        progress: { current: collected + 1, total: LIMIT },
+      });
 
-      if (hasEasyApply) {
-        console.log(`[CLASSIFIER] ✅ Easy Apply detected on card`);
-        
-        // Extract LinkedIn job ID from URL
-        const jobId = jobUrl ? jobUrl.match(/\/jobs\/view\/(\d+)/)?.[1] || '' : '';
-        
-        easyApplyJobs.push({
-          title,
-          company,
-          location,
-          linkedin_job_id: jobId,
-          url: jobUrl,
-          apply_type: 'easy_apply'
-        });
-      } else {
-        console.log(`[CLASSIFIER] ➡ Needs detail check (no Easy Apply on card)`);
-        
-        // Click on the card to open detail view
-        try {
-          await card.click();
-          await sleep(3000);
+      try {
+        await card.scrollIntoViewIfNeeded();
+        await sleep(500);
 
-          // In the detail panel, find the Apply button
-          const detailPanel = await page.$('.jobs-search__job-details, .jobs-details, .artdeco-card, .job-view-layout, .jobs-details__main-content, .px-4.py-4');
-          
-          let detailText = '';
-          if (detailPanel) {
-            detailText = await detailPanel.textContent();
-          } else {
-            detailText = await page.textContent();
+        const titleEl = await card.$(
+          '.job-card-list__title, .jobs-search-results__list-item a, .job-card-container__link, a[data-tracking-control="job-card"]',
+        );
+        const title = titleEl ? (await titleEl.textContent()).trim() : 'Unknown Title';
+
+        const companyEl = await card.$(
+          '.job-card-container__company-name, .artdeco-entity-lockup__subtitle, .job-card-container__primary-description',
+        );
+        const company = companyEl ? (await companyEl.textContent()).trim() : 'Unknown Company';
+
+        const locationEl = await card.$(
+          '.job-card-container__metadata-item, .artdeco-entity-lockup__caption, .job-card-container__secondary-description',
+        );
+        const location = locationEl ? (await locationEl.textContent()).trim() : 'Unknown Location';
+
+        let jobUrl = '';
+        const linkEl = await card.$('a');
+        if (linkEl) {
+          jobUrl = await linkEl.getAttribute('href');
+          if (jobUrl && !jobUrl.startsWith('http')) {
+            jobUrl = 'https://www.linkedin.com' + jobUrl;
           }
+        }
 
-          // Find Apply button in detail view
-          const easyApplyBtn = await page.$('button:has-text("Easy Apply"), button[aria-label*="Easy Apply"], span:has-text("Easy Apply")');
-          const applyBtn = await page.$('button:has-text("Apply"), a:has-text("Apply")');
-          const companyApplyBtn = await page.$('button:has-text("Apply on company website"), a:has-text("Apply on company website")');
+        log.info('job_detail', `"${title}" @ ${company}`, { title, company, location, jobUrl });
 
-          let applyType = 'unknown';
-          let externalUrl = '';
+        const cardText = await card.textContent();
+        const hasEasyApply = cardText.includes('Easy Apply');
+        const jobId = jobUrl.match(/\/jobs\/view\/(\d+)/)?.[1] || '';
+        if (jobId && seenIds.has(jobId)) {
+          continue;
+        }
 
-          if (easyApplyBtn) {
-            console.log(`[CLASSIFIER] ✅ Easy Apply found in detail view`);
-            const jobId = jobUrl ? jobUrl.match(/\/jobs\/view\/(\d+)/)?.[1] || '' : '';
-            easyApplyJobs.push({
+        if (hasEasyApply && !collectEasy) {
+          log.info('classify', 'Skip Easy Apply (scan_target excludes easy)');
+          continue;
+        }
+        if (!hasEasyApply && !collectExternal) {
+          log.info('classify', 'Skip non-EA card (scan_target excludes external)');
+          continue;
+        }
+
+        if (hasEasyApply && collectEasy) {
+          easyApplyJobs.push(
+            normalizeJob({
               title,
               company,
               location,
               linkedin_job_id: jobId,
               url: jobUrl,
-              apply_type: 'easy_apply'
-            });
-          } else if (companyApplyBtn) {
-            console.log(`[CLASSIFIER] 🔗 External Apply found ("Apply on company website")`);
-            // Click to open external URL
-            try {
-              const href = await companyApplyBtn.getAttribute('href');
-              console.log(`[CLASSIFIER] External URL: ${href}`);
-              
-              // Extract job ID
-              const jobId = jobUrl ? jobUrl.match(/\/jobs\/view\/(\d+)/)?.[1] || '' : '';
+              apply_type: 'easy_apply',
+            }),
+          );
+          if (jobId) seenIds.add(jobId);
+          collected++;
+          log.info('classify', 'Easy Apply (list card)');
+        } else if (collectExternal) {
+          try {
+            await card.click();
+            await sleep(3000);
 
-              // Detect platform
-              let platform = 'other';
-              if (href) {
-                if (href.includes('ashbyhq.com')) platform = 'ashby';
-                else if (href.includes('myworkdayjobs.com')) platform = 'workday';
-                else if (href.includes('greenhouse.io')) platform = 'greenhouse';
-                else if (href.includes('lever.co')) platform = 'lever';
-                else if (href.includes('bamboohr.com')) platform = 'bamboohr';
-                else if (href.includes('jazzhr.com')) platform = 'jazzhr';
-                else if (href.includes('comeet.com')) platform = 'comeet';
-                else if (href.includes('rippling.com')) platform = 'rippling';
-                else if (href.includes('pinppl.com')) platform = 'pinppl';
+            const easyApplyBtn = await page.$(
+              'button:has-text("Easy Apply"), button[aria-label*="Easy Apply"]',
+            );
+            const companyApplyBtn = await page.$(
+              'button:has-text("Apply on company website"), a:has-text("Apply on company website")',
+            );
+            const applyBtn = await page.$('button:has-text("Apply"), a:has-text("Apply")');
+
+            if (easyApplyBtn && collectEasy) {
+              easyApplyJobs.push(
+                normalizeJob({
+                  title,
+                  company,
+                  location,
+                  linkedin_job_id: jobId,
+                  url: jobUrl,
+                  apply_type: 'easy_apply',
+                }),
+              );
+              if (jobId) seenIds.add(jobId);
+              collected++;
+              log.info('classify', 'Easy Apply (detail panel)');
+            } else if ((companyApplyBtn || applyBtn) && collectExternal && !easyApplyBtn) {
+              const btn = companyApplyBtn || applyBtn;
+              const externalUrl = await captureExternalApplyUrl(context, page, btn);
+              const platform = detectPlatformFromUrl(externalUrl) || 'other';
+              const classification = classifyExternalUrl(externalUrl);
+
+              if (!externalUrl) {
+                log.info('classify', 'External Apply button but no captured URL');
+              } else if (ATS_ALLOWLIST_ONLY && !isAllowedAtsUrl(externalUrl)) {
+                skippedExternal++;
+                log.info('classify', `Skip non-allowlist URL (${classification.reason})`, {
+                  title,
+                  external_url: externalUrl,
+                });
+              } else {
+                const candidate = normalizeJob({
+                  title,
+                  company,
+                  location,
+                  linkedin_job_id: jobId,
+                  linkedin_url: jobUrl,
+                  external_url: externalUrl,
+                  apply_url: externalUrl,
+                  platform,
+                  apply_type: 'external_apply',
+                  ats_priority: classification.priority || null,
+                });
+                const { skip, reason } = shouldSkipJob(candidate, {
+                  allowlistOnly: ATS_ALLOWLIST_ONLY,
+                });
+                if (skip) {
+                  skippedExternal++;
+                  log.info('classify', `Skipped (${reason})`, { title, platform, external_url: externalUrl });
+                } else {
+                  externalApplyJobs.push(candidate);
+                  if (jobId) seenIds.add(jobId);
+                  collected++;
+                  log.info('classify', `External Apply allowlisted (${platform})`, {
+                    external_url: externalUrl,
+                  });
+                }
               }
-
-              externalApplyJobs.push({
-                title,
-                company,
-                location,
-                linkedin_job_id: jobId,
-                linkedin_url: jobUrl,
-                external_url: href || '',
-                platform,
-                apply_type: 'external_apply'
-              });
-            } catch (e) {
-              console.log(`[CLASSIFIER] ⚠ Failed to get external URL: ${e.message}`);
+            } else {
+              log.warn('classify', 'No Apply button in detail view');
             }
-          } else if (applyBtn) {
-            console.log(`[CLASSIFIER] 🔗 "Apply" button found (likely external)`);
-            // Try to get external URL
-            try {
-              const href = await applyBtn.getAttribute('href');
-              console.log(`[CLASSIFIER] External URL: ${href}`);
-              
-              const jobId = jobUrl ? jobUrl.match(/\/jobs\/view\/(\d+)/)?.[1] || '' : '';
-              let platform = 'other';
-              if (href) {
-                if (href.includes('ashbyhq.com')) platform = 'ashby';
-                else if (href.includes('myworkdayjobs.com')) platform = 'workday';
-                else if (href.includes('greenhouse.io')) platform = 'greenhouse';
-                else if (href.includes('lever.co')) platform = 'lever';
-                else if (href.includes('bamboohr.com')) platform = 'bamboohr';
-                else if (href.includes('jazzhr.com')) platform = 'jazzhr';
-                else if (href.includes('comeet.com')) platform = 'comeet';
-                else if (href.includes('rippling.com')) platform = 'rippling';
-                else if (href.includes('pinppl.com')) platform = 'pinppl';
-              }
-
-              externalApplyJobs.push({
-                title,
-                company,
-                location,
-                linkedin_job_id: jobId,
-                linkedin_url: jobUrl,
-                external_url: href || '',
-                platform,
-                apply_type: 'external_apply'
-              });
-            } catch (e) {
-              console.log(`[CLASSIFIER] ⚠ Failed to get external URL: ${e.message}`);
-            }
-          } else {
-            console.log(`[CLASSIFIER] ❓ No Apply button found in detail view`);
+          } catch (e) {
+            log.warn('classify', `Detail check failed: ${e.message}`);
           }
-
-        } catch (e) {
-          console.log(`[CLASSIFIER] ⚠ Error processing detail: ${e.message}`);
         }
+
+        await sleep(2000);
+      } catch (e) {
+        log.warn('job', `Card error: ${e.message}`);
+      }
       }
 
-      await sleep(2000); // Rate limiting delay
+      if (collected >= LIMIT) break;
 
-    } catch (e) {
-      console.log(`[CLASSIFIER] ⚠ Error processing job card ${i + 1}: ${e.message}`);
+      const nextBtn = await page.$(
+        'button[aria-label*="Next"], button[aria-label*="下一页"], li[data-test-pagination-page-btn].selected + li button',
+      );
+      if (!nextBtn || pageNum >= MAX_PAGES) {
+        log.info('page', 'No next page or max pages reached');
+        break;
+      }
+      await nextBtn.click();
+      await sleep(3000);
+    }
+
+    const easyPath = resolve(OUT_DIR, 'easy_apply_jobs.json');
+    const extPath = resolve(OUT_DIR, 'external_apply_jobs.json');
+    const outPlan = outputFilesForTarget(SCAN_TARGET);
+
+    const easyOut = outPlan.writeEasy ? easyApplyJobs : [];
+    const extOut = outPlan.writeExternal ? externalApplyJobs : [];
+
+    writeFileSync(easyPath, JSON.stringify(easyOut, null, 2));
+    writeFileSync(extPath, JSON.stringify(extOut, null, 2));
+
+    log.done('write', `target=${SCAN_TARGET} easy=${easyOut.length} external=${extOut.length} skipped_external=${skippedExternal}`, {
+      progress: { current: collected, total: LIMIT },
+      scan_target: SCAN_TARGET,
+      ats_allowlist_only: ATS_ALLOWLIST_ONLY,
+      easyPath,
+      extPath,
+      easyCount: easyOut.length,
+      externalCount: extOut.length,
+      skippedExternal,
+    });
+  } catch (err) {
+    scanOutcome = 'failed';
+    scanError = err.message || String(err);
+    log.error('fatal', scanError, { error: err.stack });
+  } finally {
+    if (heartbeatTimer) clearInterval(heartbeatTimer);
+    if (!nonInteractive && process.env.KEEP_BROWSER_OPEN === '1') {
+      log.info('browser', 'KEEP_BROWSER_OPEN=1 — press Enter in terminal to close');
+      await new Promise((r) => process.stdin.once('data', r));
+    }
+    await context.close();
+    log.info('browser', 'Browser closed');
+
+    if (process.env.SKIP_PIPELINE_FINAL !== '1') {
+      emitFinalReport(
+        log,
+        buildPipelineReport({
+          phase: 'scan',
+          stage: STAGE,
+          outcome: scanOutcome,
+          error: scanError,
+        }),
+      );
     }
   }
 
-  // Write output files
-  const easyPath = resolve(OUT_DIR, 'easy_apply_jobs.json');
-  const extPath = resolve(OUT_DIR, 'external_apply_jobs.json');
-
-  writeFileSync(easyPath, JSON.stringify(easyApplyJobs, null, 2));
-  writeFileSync(extPath, JSON.stringify(externalApplyJobs, null, 2));
-
-  console.log('\n' + '='.repeat(50));
-  console.log('[CLASSIFIER] ✅ Scan Complete!');
-  console.log(`[CLASSIFIER] Total scanned: ${toProcess.length}`);
-  console.log(`[CLASSIFIER] Easy Apply: ${easyApplyJobs.length}`);
-  console.log(`[CLASSIFIER] External Apply: ${externalApplyJobs.length}`);
-  console.log(`[CLASSIFIER]`);
-  console.log(`[CLASSIFIER] Files saved:`);
-  console.log(`[CLASSIFIER]   ${easyPath}`);
-  console.log(`[CLASSIFIER]   ${extPath}`);
-
-  if (externalApplyJobs.length > 0) {
-    console.log(`[CLASSIFIER]`);
-    console.log(`[CLASSIFIER] External platforms breakdown:`);
-    const platforms = {};
-    for (const job of externalApplyJobs) {
-      platforms[job.platform] = (platforms[job.platform] || 0) + 1;
-    }
-    for (const [p, count] of Object.entries(platforms)) {
-      console.log(`[CLASSIFIER]   ${p}: ${count}`);
-    }
-  }
-
-  // Keep browser open for debugging
-  console.log('\n[CLASSIFIER] Press Enter to close browser...');
-  await new Promise(r => process.stdin.once('data', r));
-  
-  await browser.close();
-  console.log('[CLASSIFIER] Browser closed.');
+  if (scanOutcome === 'failed') process.exit(1);
 }
 
-main().catch(err => {
-  console.error('[CLASSIFIER] ❌ Fatal error:', err);
+main().catch((err) => {
+  const log = createPipelineLogger({ stage: STAGE });
+  if (process.env.SKIP_PIPELINE_FINAL !== '1') {
+    emitFinalReport(
+      log,
+      buildPipelineReport({
+        phase: 'scan',
+        stage: STAGE,
+        outcome: 'failed',
+        error: err.message || String(err),
+      }),
+    );
+  }
   process.exit(1);
 });

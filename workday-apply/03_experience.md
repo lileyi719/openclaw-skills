@@ -45,7 +45,7 @@ Some Workday instances use an autocomplete dropdown for "Company". Using `slowly
 4. ✅ **PHYSICAL CLICK:** Click the specific text match: `browser.act: target="host", kind="click", element="text=<Exact_Company_Name>"`
 
 ## 🗂️ DATA EXTRACTION RULES
-Read the applicant's resume (`~/Documents/resume.txt`). Extract:
+Read the applicant's resume (`workday-apply/resume.txt`). Extract:
 - Job Title
 - Company Name
 - Location (City/State)

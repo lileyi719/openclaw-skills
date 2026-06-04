@@ -4,15 +4,15 @@
 Execute multiple Workday job applications in a single session, reusing authentication and tracking progress. This orchestrator wraps the existing MASTER_apply.md workflow.
 
 ## 2. INPUT
-Job URLs to apply (passed by user or read from file):
-- URL 1: https://workday.wd5.myworkdayjobs.com/en-US/Workday/job/Principal-HR-Business-Partner_JR-0105204?source=Careers_Website
-- URL 2: https://workday.wd5.myworkdayjobs.com/en-US/Workday/job/Senior-Delivery-Manager---HiredScore_JR-0102019?source=Careers_Website
-- URL 3: https://workday.wd5.myworkdayjobs.com/en-US/Workday/job/Medium-Enterprise-Account-Executive_JR-0105649?source=Careers_Website
-- URL 4: https://workday.wd5.myworkdayjobs.com/en-US/Workday/job/Implementation-Project-Manager_JR-0105898?source=Careers_Website
-- URL 5: https://workday.wd5.myworkdayjobs.com/en-US/Workday/job/Sr-Product-Advisor---Learning_JR-0105558-1?source=Careers_Website
+
+**Primary:** Read `skills/job-applications/workday_queue.json` (from `node scripts/run_job_pipeline.mjs --phase=prepare`).
+
+Each entry should include `apply_url` or `external_url` (Workday job page).
+
+**Fallback:** User-provided URL list in chat.
 
 ## 3. PROGRESS TRACKING
-**File:** `~/Documents/batch_progress.json`
+**File:** `skills/job-applications/batch_progress.json`
 
 **Structure:**
 ```json
@@ -141,7 +141,7 @@ Completed Jobs:
 Failed Jobs:
 - [Job Title] (URL) - Error: [reason]
 
-Progress file: ~/Documents/batch_progress.json
+Progress file: skills/job-applications/batch_progress.json
 ```
 
 ## 5. USER COMMANDS (USER CAN SEND ANYTIME)
@@ -258,5 +258,7 @@ If batch is interrupted (crash, user stop):
 
 - **Orchestrator:** `BATCH_apply.md` (this file)
 - **Worker:** `MASTER_apply.md` (single job logic)
-- **Progress:** `~/Documents/batch_progress.json`
-- **Applied Jobs History:** `~/Documents/applied_jobs.json` (append-only log of all successfully applied jobs)
+- **Progress:** `skills/job-applications/batch_progress.json`
+- **Applied Jobs History:** `skills/job-applications/applied_jobs.json` (append-only)
+- **Live status:** `skills/job-applications/run_status.json`
+- **Pipeline log:** `skills/job-applications/pipeline.log`

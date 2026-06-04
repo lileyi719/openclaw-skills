@@ -1,9 +1,5 @@
-```markdown
-# Keep this file empty (or with only comments) to skip heartbeat API calls.
+# Heartbeat
 
-# Add tasks below when you want the agent to check something periodically.
-```
+Optional: if `skills/job-applications/run_status.json` has `"status": "running"` and `pipeline.log` has no new line for >5 minutes, remind the user to check OpenClaw browser or heartbeat process.
 
-## Related
-
-- [Heartbeat config](/gateway/config-agents)
+Job pipeline details: `skills/job-applications/ORCHESTRATOR.md`

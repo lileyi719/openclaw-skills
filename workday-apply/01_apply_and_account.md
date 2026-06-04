@@ -5,15 +5,14 @@ Step 1: Locate and click the initial "Apply" button on the job description page.
 Step 2: Bypass the authentication wall (Create Account, Verify, Login) to reach the actual application form.
 
 ## 🛑 STRICT CREDENTIAL RULES
-- **EMAIL**: `yiqunxu35@gmail.com`
-- **PASSWORD**: `OpenClaw!2026!Leyi`
+- **EMAIL**: `unojose234@gmail.com`
+- **PASSWORD**: `${LINKEDIN_PASSWORD}`（与 LinkedIn 相同；见 `skills/job-applications/.env`）
 - **NEVER** invent or guess credentials.
 
 ## 🧠 EXECUTION STRATEGY: DYNAMIC SEMANTIC LOCATORS
 **⛔ CRITICAL: Do NOT use `browser.snapshot` on login/register forms if you can avoid it. Use `browser.evaluate` ONLY to read the DOM and discover element IDs/Aria-labels, NEVER to set values or trigger clicks.**
 
-**🚫 RULE: NO CREDENTIAL REUSE**
-For EVERY new job application, you MUST NEVER assume an existing account or try to sign in directly. ALWAYS click "Create Account" first.
+**Account strategy:** Prefer **Create Account** first. If email already exists or redirected to Sign In, use Sign In with the same credentials below. Do not ask the user for permission.
 
 ## 🛠️ PHASE 1: APPLY + MODAL + AUTH ROUTING
 **This is the EXACT 3-step sequence for ANY Workday application start. Use explicit Playwright semantic locators.**
@@ -43,11 +42,11 @@ For EACH field, execute this strict 3-step sequence:
 ## 🛠️ PHASE 3: POST-REGISTRATION LOGIN (CRITICAL EXPECTED REDIRECT)
 Workday **always** redirects to the Sign In page after clicking Create Account. This is NORMAL and NOT a failure.
 1. Immediately locate the Email and Password fields on the Sign In page.
-2. **Use the exact same 3-step physical fill method (Click -> Clear -> Type Slowly)** from Phase 2 to enter `lileyi719@gmail.com` and `OpenClaw!2026!Leyi`.
+2. **Use the exact same 3-step physical fill method (Click -> Clear -> Type Slowly)** from Phase 2 to enter `unojose234@gmail.com` and `${LINKEDIN_PASSWORD}`.
 3. Click "Sign In" / "Submit".
 4. Wait 3 seconds and check the heading (`h2` or `h3`).
 
 ## 🚪 ROUTING (AFTER LOGIN)
 - If heading says "My Information" → **SUCCESS, load `02_basic_info.md`**
-- If heading says "Verify" or "Check email" → **STOP: `VERIFICATION_REQUIRED: Please check lileyi719@gmail.com`**
+- If heading says "Verify" or "Check email" → **STOP: `VERIFICATION_REQUIRED: Please check unojose234@gmail.com`**
 - If heading still shows "Sign In" with an error → credentials may be wrong or account not yet propagated; retry once using the strict physical fill method.
