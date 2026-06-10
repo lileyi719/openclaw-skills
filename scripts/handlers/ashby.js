@@ -485,7 +485,7 @@ export async function applyAshby(page, profile, resumePath) {
       console.log(`[ashby] submit attempt ${attempt + 1} failed — checking errors...`);
 
       // Check for reCAPTCHA
-      if (bodyText.includes('recaptcha') || bodyText.includes('Recaptcha') || currentUrl.includes('recaptcha')) {
+      if (afterBody.includes('recaptcha') || afterBody.includes('Recaptcha') || afterUrl.includes('recaptcha')) {
         return { ok: false, error: 'recaptcha blocked' };
       }
 
