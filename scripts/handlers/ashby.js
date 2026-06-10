@@ -459,19 +459,27 @@ export async function applyAshby(page, profile, resumePath) {
       if (!submitBtn) return { ok: false, error: `no submit button found (attempt ${attempt + 1})` };
 
       await submitBtn.click();
-      await page.waitForTimeout(3000);
+      await page.waitForTimeout(5000);
 
-      // Check if we left the form (success)
-      const currentUrl = page.url();
-      const bodyText = await page.textContent('body') || '';
+      // Detect submit success with STRICT checks
+      const afterUrl = page.url();
+      const afterBody = await page.textContent('body') || '';
+      const submitButtonGone = !(await page.$(
+        'button:has-text("Submit"), button:has-text("Submit Application"), button[type="submit"]'
+      ));
 
-      if (
-        /thank you|application submitted|successfully|received|submitted|✓|恭喜|提交成功/i.test(bodyText)
-        || (!currentUrl.includes('ashbyhq.com/application') && !currentUrl.includes('ashby_jid'))
-      ) {
-        console.log(`[ashby] submit success (attempt ${attempt + 1})`);
+      // Strict success signals:
+      const isThankYouPage = afterUrl.includes('/thank-you') || afterUrl.includes('/thanks') || afterUrl.includes('/success') || afterUrl.includes('/submitted');
+      const hasConfirmText = /your application has been submitted|we've received your application|your application was submitted|✅|thank you for applying/i.test(afterBody);
+      const formPageGone = !afterUrl.includes('ashbyhq.com') || afterUrl.includes('/thank');
+
+      if (submitButtonGone && (isThankYouPage || hasConfirmText || formPageGone)) {
+        console.log(`[ashby] SUBMIT CONFIRMED (attempt ${attempt + 1}) — url=${afterUrl.slice(afterUrl.indexOf('ashby'))}`);
         return { ok: true };
       }
+
+      // If submit button still exists, definitely failed
+      console.log(`[ashby] submit attempt ${attempt + 1} — button gone=${submitButtonGone} thankYou=${isThankYouPage} confirmText=${hasConfirmText}`);
 
       // Submit failed — check for errors
       console.log(`[ashby] submit attempt ${attempt + 1} failed — checking errors...`);

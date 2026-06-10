@@ -430,20 +430,21 @@ export async function applyLever(page, profile, resumePath) {
       }
       if (!submitBtn) return { ok: false, error: `no submit button (attempt ${attempt + 1})` };
 
-      const beforeUrl = page.url();
       await submitBtn.click();
-      await page.waitForTimeout(3000);
+      await page.waitForTimeout(5000);
 
-      // Check success
+      // Strict success detection for Lever
       const afterUrl = page.url();
       const body = await page.textContent('body') || '';
+      const submitButtonGone = !(await page.$(
+        'button:has-text("Submit"), button:has-text("Submit Application"), button[type="submit"], .submit-button'
+      ));
 
-      // Lever success indicators: /thanks, /submitted, "Thank you"
-      if (
-        afterUrl.includes('/thanks') || afterUrl.includes('/submitted') || afterUrl.includes('/success')
-        || /thank you|application submitted|successfully|submitted|✓|恭喜/i.test(body)
-      ) {
-        console.log(`[lever] submit success (attempt ${attempt + 1})`);
+      const isThankYouPage = afterUrl.includes('/thanks') || afterUrl.includes('/submitted') || afterUrl.includes('/success') || afterUrl.includes('/thank');
+      const hasConfirmText = /your application has been submitted|we've received your application|thank you for applying|application received|✅|thanks for applying/i.test(body);
+
+      if (submitButtonGone && (isThankYouPage || hasConfirmText || afterUrl !== beforeUrl)) {
+        console.log(`[lever] SUBMIT CONFIRMED (attempt ${attempt + 1})`);
         return { ok: true };
       }
 

@@ -39,6 +39,7 @@ const PROJECT_ROOT = resolve(__dirname, '..');
 function parseArgs(argv) {
   const opts = {
     headless: false,
+    keepOpen: false,
     limit: Infinity,
     atsFilter: null,
     resumePath: getResumePath(),
@@ -46,6 +47,7 @@ function parseArgs(argv) {
   };
   for (const arg of argv) {
     if (arg === '--headless') opts.headless = true;
+    else if (arg === '--keep-open') opts.keepOpen = true;
     else if (arg === '--help') opts.help = true;
     else if (arg.startsWith('--limit=')) opts.limit = parseInt(arg.slice(8), 10) || Infinity;
     else if (arg.startsWith('--ats=')) opts.atsFilter = arg.slice(6).toLowerCase();
@@ -61,6 +63,7 @@ Usage: node scripts/run-handlers.mjs [options]
 
 Options:
   --headless         Run browser in headless mode
+  --keep-open        Keep browser open after run (to verify result visually)
   --limit=N          Process at most N jobs (default: all)
   --ats=NAME         Only one ATS type (ashby, lever)
   --resume=PATH      Path to resume PDF
@@ -177,6 +180,12 @@ async function main() {
       await new Promise((r) => setTimeout(r, 1500));
     }
   } finally {
+    if (opts.keepOpen) {
+      console.log('
+  --keep-open: browser stays open. Press Ctrl+C to close.
+');
+      await new Promise(() => {}); // wait forever
+    }
     await browser.close();
   }
 
