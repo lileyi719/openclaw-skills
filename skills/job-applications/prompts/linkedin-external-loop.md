@@ -54,9 +54,7 @@
 | 用途 | Email | Password |
 |------|-------|----------|
 | LinkedIn 登录 | unojose234@gmail.com | ${LINKEDIN_PASSWORD} |
-| **全 ATS Create Account / Sign In**（Workday · UltiPro · Rippling · Greenhouse · ICIMS · 任意 portal） | unojose234@gmail.com | **`Waibao1234567Go!`**（固定；含 `!`；Verify 同一串；**不是** LINKEDIN_PASSWORD） |
-
-**规则：** 见 Create Account / Register / Sign In → **必须**用上表凭据尝试；**仅** SMS/email 验证码无法自动完成才 `skipped_verification`；OAuth 独占（无 Email+Password 表单）才 `skipped_auth_wall`。
+| Workday / ATS 注册登录 | unojose234@gmail.com | ${LINKEDIN_PASSWORD} |
 
 脚本环境变量：`skills/job-applications/.env`（`LINKEDIN_EMAIL` / `LINKEDIN_PASSWORD` / `WORKDAY_*`）
 
@@ -92,7 +90,7 @@
 | URL 含 | 动作 |
 |--------|------|
 | `greenhouse.io`, `icims.com` | 立即 skip，close apply，回 linkedin |
-| `myworkdayjobs.com` | read `workday-apply/SKILL.md` + `MASTER_apply.md` + `BROWSER_HUMAN.md`；**禁止 fill**；人类打字协议 |
+| `myworkdayjobs.com` | 按 `workday-apply/SKILL.md` + `BROWSER_HUMAN.md` |
 | `ashbyhq`, `jazzhr`, `bamboohr`, `comeet`, `lever.co`, `rippling`, `pinppl` | 按 `external-apply/SKILL.md`（`bamboohr` 另 read `external-apply/bamboohr.md`） |
 | `lever.co` + Captcha | skip |
 | 其他 | 通用 external 流程 |

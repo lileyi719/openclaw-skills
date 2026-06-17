@@ -1,0 +1,184 @@
+[
+  {
+    "id": "JR-000388",
+    "company": "Buildertrend",
+    "title": "Senior Software Engineer",
+    "url": "https://buildertrend.wd108.myworkdayjobs.com/en-US/External_Careers/job/Omaha%2C-NE/Senior-Software-Engineer_JR-000388/apply",
+    "platform": "Workday",
+    "status": "submitted",
+    "submittedAt": "2026-06-10T18:19:00-07:00"
+  },
+  {
+    "url": "https://jobs.ashbyhq.com/uipath/e8bcdabc-facc-456d-a09e-f1286f88abcf/application?utm_source=LinkedIn",
+    "company": "UiPath",
+    "title": "Software Engineer II (Maestro)",
+    "type": "ashby",
+    "status": "submitted_ashbyhq",
+    "timestamp": "2026-06-11T01:47:00.000Z",
+    "note": "Ashby - full name, email, phone, resume upload, EEO, submitted",
+    "method": "openclaw_browser",
+    "ts": "2026-06-11T01:54:46.499Z",
+    "platform": "ashbyhq"
+  },
+  {
+    "jobId": "7930936",
+    "company": "BeyondTrust",
+    "role": "Associate Software Development Engineer",
+    "url": "https://job-boards.greenhouse.io/beyondtrust/jobs/7930936",
+    "status": "submitted_greenhouse",
+    "ats": "greenhouse",
+    "appliedAt": "2026-06-11T01:47:00.000Z",
+    "method": "openclaw_browser",
+    "ts": "2026-06-11T02:07:07.954Z",
+    "platform": "greenhouse"
+  },
+  {
+    "status": "skipped_incomplete",
+    "company": "Aegis Sortation",
+    "title": "AI Software Engineer",
+    "reason": "signature_password_rejected",
+    "url": "https://secure8.yourpayrollhr.com/ta/MGH7316.careers?rnd=LSR&Ext=careers&sft=XNNVUJUCCW&ActiveSessionId=38457829598",
+    "platform": "yourpayrollhr",
+    "method": "openclaw_browser",
+    "ts": "2026-06-11T02:21:02.593Z"
+  },
+  {
+    "url": "https://job-boards.greenhouse.io/embed/job_app?for=jamf&validityToken=T2W2ZStFn8V_FPPqviZXSFGPZBwgvoFOm6q-0JWtXRPfiCHIiC7_uz8Wyvmwo66fqsz-66pCd_aacvNJQQTIJ-rQ3ldNT2rdNnBo7x9o8oOyxo00sldr6jZ5A8Gal-EdRBcY1LCugDSCes3cQFK4NiUdwNMwMjiExeif53zK3Dzg8WWQoYmhGOHJyDMh6IPRRgxMZ1vDZknVWDYL6fEHj9W3AvK3yaH4bADONooYlLDlad_yiiQga7vUjCREOhM0ccg0amzq7hHr5qYyJ0XbLNjpbUrtdXjf4tXA4wD6-6An46FWCEARJF-1bNGeoI51Br1JcOorxRboMONKt_6kSQ%3D%3D&token=6015199004&t=8229fc8d4us",
+    "company": "Jamf",
+    "title": "Senior Software Engineer",
+    "status": "applied",
+    "appliedAt": "2026-06-10T19:11:00-07:00",
+    "method": "openclaw_browser",
+    "ts": "2026-06-11T02:31:22.866Z"
+  },
+  {
+    "status": "submitted_greenhouse",
+    "platform": "greenhouse",
+    "company": "Jamf",
+    "url": "https://job-boards.greenhouse.io/jamf/jobs/6015199004",
+    "title": "Senior Software Engineer",
+    "method": "openclaw_browser",
+    "ts": "2026-06-11T02:42:49.950Z"
+  },
+  {
+    "status": "skipped_verification",
+    "platform": "greenhouse",
+    "company": "Chainguard",
+    "url": "https://job-boards.greenhouse.io/chainguard/jobs/4688378006",
+    "reason": "greenhouse email verification code",
+    "detail": "SMS/email verification code to unojose234@gmail.com - cannot automate",
+    "method": "openclaw_browser",
+    "ts": "2026-06-11T03:41:23.933Z"
+  },
+  {
+    "method": "openclaw_browser",
+    "status": "skipped_incomplete",
+    "platform": "workday",
+    "url": "https://parsons.wd5.myworkdayjobs.com/en-US/Search/job/US---Remote-Any-Location/SOFTWARE-DEVELOPER-II_R174109/apply/applyManually?source=LinkedIn",
+    "reason": "workday service maintenance/unavailable at step 2 My Experience",
+    "ts": "2026-06-11T03:31:00.000Z"
+  },
+  {
+    "status": "skipped_platform",
+    "reason": "icims blocked",
+    "platform": "icims",
+    "company": "Garmin",
+    "title": "Python Software Engineer 2",
+    "url": "https://careers.garmin.com/jobs/18438?lang=en-us&iis=Job+Board&iisn=LinkedIn",
+    "method": "openclaw_browser",
+    "ts": "2026-06-11T04:02:22.443Z"
+  },
+  {
+    "url": "https://jobs.ashbyhq.com/bestow/7ec5ca3f-4ca0-481c-9d09-0a19eedb7a2f",
+    "jobTitle": "Frontend Software Engineer II",
+    "company": "Bestow",
+    "ats": "ashby",
+    "status": "submitted_ashbyhq",
+    "method": "openclaw_browser",
+    "ts": "2026-06-11T04:07:32.133Z",
+    "platform": "ashbyhq"
+  },
+  {
+    "url": "https://job-boards.greenhouse.io/figma/jobs/5802956004",
+    "ats": "greenhouse",
+    "company": "Figma",
+    "title": "Support AI Engineer",
+    "status": "submitted_greenhouse",
+    "timestamp": "2026-06-10T20:56:00-07:00",
+    "sessionId": "linkedin-ext-20260610-1722-c10",
+    "method": "openclaw_browser",
+    "ts": "2026-06-11T04:19:12.889Z",
+    "platform": "greenhouse"
+  },
+  {
+    "site": "ashby",
+    "company": "Neural Earth",
+    "title": "Full Stack Developer",
+    "url": "https://jobs.ashbyhq.com/neural-earth/7a31c6b8-910d-4e81-aeb4-5ea16c049c9d/application",
+    "status": "submitted_ashbyhq",
+    "submittedAt": "2026-06-10T21:22:00-07:00",
+    "method": "openclaw_browser",
+    "ts": "2026-06-11T04:40:40.663Z",
+    "platform": "ashbyhq"
+  },
+  {
+    "site": "lever",
+    "company": "Collate",
+    "title": "Frontend Software Engineer",
+    "url": "https://jobs.lever.co/collate/ddb57f92-0391-43a6-bd90-10fc2abd23fb/apply",
+    "status": "skipped_hcaptcha",
+    "submittedAt": "2026-06-10T21:25:00-07:00",
+    "reason": "hCaptcha verification required, cannot auto-submit",
+    "method": "openclaw_browser",
+    "ts": "2026-06-11T04:44:09.603Z"
+  },
+  {
+    "site": "adzuna",
+    "company": "Flowspace",
+    "title": "Software Engineer II",
+    "url": "https://www.adzuna.com/details/5757923119",
+    "status": "skipped_adzuna_easyapply",
+    "submittedAt": "2026-06-10T21:26:00-07:00",
+    "reason": "Adzuna Easy Apply requiring account creation, not company direct apply",
+    "method": "openclaw_browser",
+    "ts": "2026-06-11T04:45:32.661Z"
+  },
+  {
+    "site": "ashbyhq",
+    "company": "Vetcove",
+    "title": "Senior Software Engineer",
+    "url": "https://jobs.ashbyhq.com/Vetcove/0f3616b7-fe63-4ac2-9335-bbb8a0c36ff7/application",
+    "status": "skipped_duplicate",
+    "submittedAt": "2026-06-10T21:28:00-07:00",
+    "reason": "Previously applied to this role",
+    "method": "openclaw_browser",
+    "ts": "2026-06-11T04:50:01.890Z"
+  },
+  {
+    "status": "submitted_greenhouse",
+    "platform": "greenhouse",
+    "company": "CrashPlan",
+    "url": "https://job-boards.greenhouse.io/crashplan/jobs/4278594009",
+    "method": "openclaw_browser",
+    "ts": "2026-06-11T04:57:13.566Z"
+  },
+  {
+    "method": "openclaw_browser",
+    "status": "skipped_verification",
+    "platform": "workday",
+    "url": "https://nelnet.wd1.myworkdayjobs.com/MyNelnet/job/Remote/Software-Engineer-II_R22617",
+    "ts": "2026-06-10T21:56:00-07:00",
+    "reason": "email verification required",
+    "company": "Nelnet",
+    "title": "Software Engineer II"
+  },
+  {
+    "url": "https://homedepot.wd5.myworkdayjobs.com/en-US/CareerDepot/job/GEORGIA---VIRTUAL---GA01/Software-Engineer-II--Remote-_Req182582-1",
+    "company": "Home Depot",
+    "title": "Software Engineer II - Golang (Remote)",
+    "status": "submitted_workday",
+    "method": "openclaw_browser",
+    "ts": "2026-06-11T05:33:22.534Z",
+    "platform": "workday"
+  }
+]

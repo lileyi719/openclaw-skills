@@ -1,0 +1,60 @@
+[pipeline] id=linkedin-pipeline-20260609-2238 started=2026-06-10T05:38:52.008Z
+[pipeline] apply target=100 session=linkedin-ext-20260609-2238
+[pipeline] ensuring browser profile linkedin-jobs is running…
+🦞 browser [linkedin-jobs] running: true
+[pipeline] preflight: openclaw browser --browser-profile linkedin-jobs tabs…
+1. (21) Software Engineer Jobs in United States | LinkedIn [t1]
+   https://www.linkedin.com/jobs/search/?currentJobId=4426011601&keywords=Software%20Engineer&location=United%20States
+   id: 043876CA570862B5512E45E9C9D34C7C
+2. https://li.protechts.net/index.html?ts=1781069139658&amp;r_id=AAZT33lMmH%2FtUX9%2FBKoMoQ%3D%3D&amp;app_id=PXdOjV695v&amp;uc=scraping&amp;d_id=3c73b8bf87cae52fc327c743b2df5b50574be23f4887a74903c9a10c92a9332d [t15]
+   https://li.protechts.net/index.html?ts=1781069139658&r_id=AAZT33lMmH%2FtUX9%2FBKoMoQ%3D%3D&app_id=PXdOjV695v&uc=scraping&d_id=3c73b8bf87cae52fc327c743b2df5b50574be23f4887a74903c9a10c92a9332d
+   id: FF6ABCF34F855B99850E2B026BB2AD26
+3. https://li.protechts.net/index_stg.html?ts=1781069139659&amp;r_id=AAZT33lMmH%2FtUX9%2FBKoMoQ%3D%3D&amp;app_id=PXdOjV695v&amp;uc=postAction&amp;d_id=3c73b8bf87cae52fc327c743b2df5b50574be23f4887a74903c9a10c92a9332d [t16]
+   https://li.protechts.net/index_stg.html?ts=1781069139659&r_id=AAZT33lMmH%2FtUX9%2FBKoMoQ%3D%3D&app_id=PXdOjV695v&uc=postAction&d_id=3c73b8bf87cae52fc327c743b2df5b50574be23f4887a74903c9a10c92a9332d
+   id: D12F6F240E5088FEAEB10334C8D37CA4
+4. https://www.google.com/recaptcha/enterprise/anchor?ar=1&amp;k=6LcIy_MqAAAAAMKiupFSbmzW3xjGSlIfRzNWYMjC&amp;co=aHR0cHM6Ly93d3cubGlua2VkaW4uY29tOjQ0Mw..&amp;hl=zh-CN&amp;v=ne1iDVwClkE7nKD3uA9Vqsvl&amp;size=invisible&amp;anchor-ms=20000&amp;execute-ms=30000&amp;cb=xdfo7hgnbu81 [t17]
+   https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LcIy_MqAAAAAMKiupFSbmzW3xjGSlIfRzNWYMjC&co=aHR0cHM6Ly93d3cubGlua2VkaW4uY29tOjQ0Mw..&hl=zh-CN&v=ne1iDVwClkE7nKD3uA9Vqsvl&size=invisible&anchor-ms=20000&execute-ms=30000&cb=xdfo7hgnbu81
+   id: 3345CAC01B6286E2BE6339AFE6697C53
+5. https://9261636.fls.doubleclick.net/activityi;dc_pre=CNPTw8v3-5QDFeBXCAQdfKcBZg;src=9261636;type=car_ja;rcb=6;ord=1;num=5175976105350;npa=0;auiddc=1144277982.1780880269;gdid=dYmQxMT;uaa=arm;uab=64;uafvl=Google%2520Chrome%3B149.0.7827.55%7CChromium%3B149.0.7827.55%7CNot)A%253BBrand%3B24.0.0.0;uamb=0;uam=;uap=macOS;uapv=13.4.0;uaw=0;pscdl=noapi;frm=0;_tu=KJA;gtm=45fe6641v9180513682za200zd9180513682xec;gcs=G110;gcd=13r3q3X3r5l1;dma=0;dc_fmt=2;tag_exp=0~115616986~115938465~115938469;epver=2;dc_random=1781069140_lOu4cSdl1WRbTU3tI58M0jxd7FWoY0l-Cw;_dc_test=1;~oref=https%3A%2F%2Fwww.linkedin.com%2Fjobs%2Fsearch%2F%3FcurrentJobId%3D4426011601%26keywords%3DSoftware%2520Engineer%26location%3DUnited%2520States? [t18]
+   https://9261636.fls.doubleclick.net/activityi;dc_pre=CNPTw8v3-5QDFeBXCAQdfKcBZg;src=9261636;type=car_ja;rcb=6;ord=1;num=5175976105350;npa=0;auiddc=1144277982.1780880269;gdid=dYmQxMT;uaa=arm;uab=64;uafvl=Google%2520Chrome%3B149.0.7827.55%7CChromium%3B149.0.7827.55%7CNot)A%253BBrand%3B24.0.0.0;uamb=0;uam=;uap=macOS;uapv=13.4.0;uaw=0;pscdl=noapi;frm=0;_tu=KJA;gtm=45fe6641v9180513682za200zd9180513682xec;gcs=G110;gcd=13r3q3X3r5l1;dma=0;dc_fmt=2;tag_exp=0~115616986~115938465~115938469;epver=2;dc_random=1781069140_lOu4cSdl1WRbTU3tI58M0jxd7FWoY0l-Cw;_dc_test=1;~oref=https%3A%2F%2Fwww.linkedin.com%2Fjobs%2Fsearch%2F%3FcurrentJobId%3D4426011601%26keywords%3DSoftware%2520Engineer%26location%3DUnited%2520States?
+   id: 404412D0EF552DD36281846A2B4A4F41
+6. https://10880300.fls.doubleclick.net/activityi;dc_pre=CIaLx8v3-5QDFeZVCAQdrJkfDg;src=10880300;type=car_ja;rcb=11;ord=1;num=8768301801763;npa=0;auiddc=1144277982.1780880269;gdid=dYmQxMT;uaa=arm;uab=64;uafvl=Google%2520Chrome%3B149.0.7827.55%7CChromium%3B149.0.7827.55%7CNot)A%253BBrand%3B24.0.0.0;uamb=0;uam=;uap=macOS;uapv=13.4.0;uaw=0;pscdl=noapi;frm=0;_tu=KJA;gtm=45fe6641za200zb9180513682zd9180513682xec;gcs=G110;gcd=13r3q3X3r5l1;dma=0;dc_fmt=2;tag_exp=0~115616985~115938465~115938468;epver=2;dc_random=1781069140_W7yIMtImZor2Ad5iCIvRKWsvSSKtJLWiYw;_dc_test=1;~oref=https%3A%2F%2Fwww.linkedin.com%2Fjobs%2Fsearch%2F%3FcurrentJobId%3D4426011601%26keywords%3DSoftware%2520Engineer%26location%3DUnited%2520States? [t19]
+   https://10880300.fls.doubleclick.net/activityi;dc_pre=CIaLx8v3-5QDFeZVCAQdrJkfDg;src=10880300;type=car_ja;rcb=11;ord=1;num=8768301801763;npa=0;auiddc=1144277982.1780880269;gdid=dYmQxMT;uaa=arm;uab=64;uafvl=Google%2520Chrome%3B149.0.7827.55%7CChromium%3B149.0.7827.55%7CNot)A%253BBrand%3B24.0.0.0;uamb=0;uam=;uap=macOS;uapv=13.4.0;uaw=0;pscdl=noapi;frm=0;_tu=KJA;gtm=45fe6641za200zb9180513682zd9180513682xec;gcs=G110;gcd=13r3q3X3r5l1;dma=0;dc_fmt=2;tag_exp=0~115616985~115938465~115938468;epver=2;dc_random=1781069140_W7yIMtImZor2Ad5iCIvRKWsvSSKtJLWiYw;_dc_test=1;~oref=https%3A%2F%2Fwww.linkedin.com%2Fjobs%2Fsearch%2F%3FcurrentJobId%3D4426011601%26keywords%3DSoftware%2520Engineer%26location%3DUnited%2520States?
+   id: 13BB842286DB37E94D8D217C41AC4554
+7. https://cs.ns1p.net/u.html?a=1516sqc#check [t20]
+   https://cs.ns1p.net/u.html?a=1516sqc#check
+   id: 0088A9E0636DB88CD8744D8E7675D5FD
+8. https://www.google.com/recaptcha/enterprise/webworker.js?hl=zh-CN&amp;v=ne1iDVwClkE7nKD3uA9Vqsvl [t21]
+   https://www.google.com/recaptcha/enterprise/webworker.js?hl=zh-CN&v=ne1iDVwClkE7nKD3uA9Vqsvl
+   id: 659DE4734283D3C7A157B8A16579105C
+[pipeline] preflight: browser tabs OK
+[pipeline] preflight: LinkedIn session / auto-login…
+[linkedin-login] already logged in (LinkedIn tab found)
+[pipeline] preflight: LinkedIn OK (already_logged_in)
+[pipeline] apply until 100 new submitted (new session=linkedin-ext-20260609-2238)
+[apply] sessionId=linkedin-ext-20260609-2238 target=100 applied_before=157
+[apply] mode=gateway (timeout=0)
+[apply] turn limits: maxTurn=none turnIdle=600s
+[apply] auto-continue: on (cap=unlimited)
+[apply] live output + heartbeat every 20s (Ctrl+C stops pipeline)
+[pipeline] preflight: LinkedIn session / auto-login…
+[linkedin-login] already logged in (LinkedIn tab found)
+[pipeline] preflight: LinkedIn OK (already_logged_in)
+[apply] monitor: tail /Users/mac/.openclaw/agents/main/sessions/linkedin-ext-20260609-2238.jsonl every 20s
+[agent] mode=gateway (--timeout 0) turnIdle=600s maxTurn=none session=linkedin-ext-20260609-2238
+[agent] exec: openclaw agent -m … --session-id linkedin-ext-20260609-2238
+[35m[plugins][39m [90mloading bonjour from /Users/mac/.nvm/versions/node/v24.16.0/lib/node_modules/openclaw/dist/extensions/bonjour/index.js[39m
+[35m[plugins][39m [90mloading browser from /Users/mac/.nvm/versions/node/v24.16.0/lib/node_modules/openclaw/dist/extensions/browser/index.js[39m
+[35m[plugins][39m [90mloading canvas from /Users/mac/.nvm/versions/node/v24.16.0/lib/node_modules/openclaw/dist/extensions/canvas/index.js[39m
+[35m[plugins][39m [90mloading deepseek from /Users/mac/.nvm/versions/node/v24.16.0/lib/node_modules/openclaw/dist/extensions/deepseek/index.js[39m
+[35m[plugins][39m [90mloading device-pair from /Users/mac/.nvm/versions/node/v24.16.0/lib/node_modules/openclaw/dist/extensions/device-pair/index.js[39m
+Registered plugin command: /pair (plugin: device-pair)
+[35m[plugins][39m [90mloading file-transfer from /Users/mac/.nvm/versions/node/v24.16.0/lib/node_modules/openclaw/dist/extensions/file-transfer/index.js[39m
+[35m[plugins][39m [90mloading memory-core from /Users/mac/.nvm/versions/node/v24.16.0/lib/node_modules/openclaw/dist/extensions/memory-core/index.js[39m
+Registered plugin command: /dreaming (plugin: memory-core)
+[35m[plugins][39m [90mloading phone-control from /Users/mac/.nvm/versions/node/v24.16.0/lib/node_modules/openclaw/dist/extensions/phone-control/index.js[39m
+Registered plugin command: /phone (plugin: phone-control)
+[35m[plugins][39m [90mloading talk-voice from /Users/mac/.nvm/versions/node/v24.16.0/lib/node_modules/openclaw/dist/extensions/talk-voice/index.js[39m
+Registered plugin command: /voice (plugin: talk-voice)
+[35m[plugins][39m [90mloaded 9 plugin(s) (9 attempted) in 421.2ms[39m
+[agent] abort gateway: agent:main:explicit:linkedin-ext-20260609-2238
