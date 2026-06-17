@@ -1,0 +1,9 @@
+{
+  "scan_target": "external",
+  "keywords": "Software Engineer",
+  "location": "United States",
+  "limit": 15,
+  "max_pages": 3,
+  "search_url": "https://www.linkedin.com/jobs/search/?keywords=Software+Engineer&location=United+States&sortBy=DD",
+  "instructions": "用户说 EXTERNAL JOBS 时：scan_target 必须为 external，只写入 external_apply_jobs.json，easy_apply_jobs.json 写 []"
+}

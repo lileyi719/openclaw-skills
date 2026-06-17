@@ -1,0 +1,55 @@
+**CONTACT INFORMATION**
+**Name:** Yiqun (Brian) Xu
+**Citizenship:** US Citizen
+**Phone:** +1(929)461-4214
+**Email:** unojose234@gmail.com
+**Address:** 2550 Van Ness Ave, San Francisco, CA 94109
+**LinkedIn:** https://www.linkedin.com/in/yiqun-xu
+
+**INTRODUCTION**
+I am a product-oriented full-stack engineer experienced in delivering pixel-perfect user interfaces from Figma prototypes across web and mobile apps, while building scalable, reliable backend systems to support real-world products. I focus on reducing user friction through thoughtful UX, clean UI implementation, and end-to-end ownership from frontend to backend.
+
+**EXPERIENCE**
+
+**Co-Founder & Engineer | 7dollar.delivery**
+San Francisco, CA | December 2022 – Present
+As Co-Founder and engineer at 7dollar.delivery, I led the creation of an innovative food delivery platform offering a $7 flat-rate delivery (within 5 miles) model. I engineered comprehensive technology solutions for the restaurant industry, including mobile applications, QR and NFC-based ordering, POS integrations, and remote revenue tracking. I collaborated closely with local restaurants in San Francisco, building long-term customer relationships and tailoring software to meet their unique operational needs.
+*   Enhanced Menu Management via LLM Integration: Built mobile-friendly interfaces using LLMs, Google OCR, and the ChatGPT API to streamline 150+ menu item uploads, boosting efficiency by 12,000% with AI-curated images, translations, and pricing.
+*   Mobile App Development with React Native & Expo: Built cross-platform merchant-side mobile applications for iOS and Android using React Native and Expo; implemented push notifications and real-time updates with Firebase Cloud Messaging and Expo notification services.
+*   Priority Queue System for Printer Coordination: Developed a command queue system to manage thermal receipt and label printers, synchronizing operations across multiple printers.
+*   Delivery API Integration with DoorDash: Partnered with DoorDash to build a custom delivery API, ensuring compliance and seamless integration with their logistics network.
+*   Rapid SMS Deployment via Android & AWS: Created a workaround for A2P 10DLC restrictions by developing an SMS sender API through Android and AWS LightSail, expediting SMS deployment.
+*   Stripe Payment System Optimization: Implemented and customized Stripe APIs, enhancing chargeback and dispute resolution rates by 30% and ensuring secure online and in-person payments.
+*   IndexedDB for Offline-Enabled Frontend: Introduced offline functionality using IndexedDB, ensuring uninterrupted operations, data security, and payment processing in unstable network environments.
+*   Accelerator Success & Funding: Spearheaded business plan development, prototyping, and market validation, securing a $50,000 funding award through an SF government accelerator program.
+*   Full Product Lifecycle Development: Managed end-to-end product development using Node.js, React.js, Firebase, IndexedDB, and Google Cloud Platform (GCP) across mobile and web platforms.
+
+**Full Stack Engineer (Contract) | ComfyUI**
+San Francisco, CA (Hybrid) | June 2025 – July 2025
+As a Full Stack Engineer on a short-term contract contributing to ComfyUI extensions, I worked on a cross-platform Electron application, translating Figma prototypes into pixel-accurate, production-ready user interfaces using React and TypeScript.
+*   UI Architecture & Implementation: Built reusable, maintainable React and TypeScript components for an Electron-based ComfyUI extension, ensuring consistent UI behavior across complex workflows.
+*   Frontend & API Integration: Integrated frontend components with internal Python-based APIs, optimizing rendering performance and state updates for complex UI interactions.
+*   UI Quality & Testing: Improved user experience through systematic debugging and refactoring, and implemented Playwright-based end-to-end tests to ensure UI correctness and prevent regressions.
+
+**Application Programmer | Social Media Lab, Lehigh University**
+Remote | August 2022 – August 2023
+As an Application Programmer at Lehigh University's Social Media Lab, I developed digital tools for older adults to combat online scams, focusing on usability, reliability, and educational impact.
+*   DART Learning Module: Designed an interactive learning module to educate users on online scams, incorporating multi-role authentication, rewards, and tracking.
+*   Simulation Tools for Scam Awareness: Developed phishing mail simulations and misinformation detection tools, enhancing practical training and hands-on user experience.
+*   Cross-functional Collaboration: Collaborated with stakeholders and UX designers, ensuring features met user needs and contributed to the project's educational goals.
+
+**OPEN SOURCE PROJECT**
+**Node.js Library for Brother Label Printers**
+Built an NPM library to print large PNG images on Brother Label Printers, using algorithms for image conversion, rotation, data compression, and hexadecimal formatting to prevent crashes and streamline large-image processing.
+
+**KEY SKILLS**
+
+**Software Development:**
+Full Stack Development, Mobile and Web Applications, Object-Oriented Programming, Agile Development & Best Practices, API Integration & Compliance, Secure Payment Processing, Authentication & Data Privacy, Business Development & Partnerships.
+
+**Software & Cloud Computing Technologies:**
+React.js, TypeScript, Node.js, PHP, Java, Kotlin, C#, Go, .NET, Python, AWS, GCP, Azure, Firebase, Expo, React Native, MongoDB, Oracle SQL, MySQL, Responsive Design, User-Centered Design, UI/UX Design (Figma), Git, IndexedDB.
+
+**EDUCATION**
+**Bachelor of Science in Computer Science and Engineering**
+Lehigh University, Bethlehem, PA | Graduated 2022
